@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.jcrespomorales.woodmanager360.dto.RegistroUsuarioDTO;
 import com.jcrespomorales.woodmanager360.entity.Usuario;
 import com.jcrespomorales.woodmanager360.service.UsuarioService;
+import com.jcrespomorales.woodmanager360.dto.LoginUsuarioDTO;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -22,6 +23,17 @@ public class AuthController {
             @RequestBody RegistroUsuarioDTO dto) {
 
         Usuario usuario = usuarioService.registrarUsuario(dto);
+
+        return ResponseEntity.ok(usuario);
+    }
+    
+    @PostMapping("/login")
+    public ResponseEntity<Usuario> login(
+            @RequestBody LoginUsuarioDTO dto) {
+
+        Usuario usuario = usuarioService.login(
+                dto.getEmail(),
+                dto.getPassword());
 
         return ResponseEntity.ok(usuario);
     }
